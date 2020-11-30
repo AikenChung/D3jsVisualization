@@ -9,5 +9,21 @@ rect{
 }
 
 text {
+    font-size: 2.5em;
+    font-family: sans-serif;
+}
+
+.tick text{
     font-size: 2em;
+    fill: #635F5D;
+}
+
+.tick line{
+    stroke: #C0c0BB;
+}
+
+.xAxis-label{
+    font-size: 3em;
+    fill: #635F5D;
+    font-family: sans-serif;
 }
