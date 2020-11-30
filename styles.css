@@ -1,0 +1,13 @@
+body{
+    margin: 0px;
+    overflow: hidden;
+    align-self: center;
+}
+
+rect{
+    fill:steelblue;
+}
+
+text {
+    font-size: 1.4em;
+}
