@@ -1,4 +1,3 @@
-//const { csv } = require("d3");
 
 (function (d3) {
     'use strict';
@@ -10,7 +9,7 @@
 
     const width = +svg.attr('width');
     const height = +svg.attr('height');
-    const margin = { top: 20, right: 40, bottom: 20, left: 150 };
+    const margin = { top: 20, right: 40, bottom: 20, left: 90 };
     const innerHeight = height - margin.top - margin.bottom;
     const innerWidth = width - margin.left - margin.right;
 
@@ -37,8 +36,14 @@
         const g = svg.append('g')
             .attr('transform',`translate(${margin.left},${margin.top})`);
             
+        const yAxisTickFormat = number =>
+            d3.format(".3s")(number)
+                .replace('G','B');
 
-        g.append('g').call(d3.axisLeft(xScale));
+        const yAxis = d3.axisLeft(xScale)
+                        .tickFormat(yAxisTickFormat);
+                        
+        g.append('g').call(yAxis);
         g.append('g').call(d3.axisBottom(yScale))
             .attr('transform',`translate(0,${innerHeight-10})`);
 
