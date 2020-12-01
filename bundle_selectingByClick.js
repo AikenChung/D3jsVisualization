@@ -17,9 +17,10 @@
         
     const onClick = id => {
         selectedFruit = id;
+        console.log(selectedFruit)
         render()
     };
-
+   
     const fruitBowl = (selection, props) =>{
         const { fruits, 
                 height, 
@@ -34,7 +35,11 @@
                     .attr('cy', height/2)
                 .merge(circles)      
                     .attr('fill', d => colorScale(d.type))
-                    .on('click', function(event,d) {onClick(d.id)})                  
+                    .attr('stroke-width', 5)
+                    .attr('stroke', d => d.id === selectedFruit
+                                            ? 'black' 
+                                            : 'none' )
+                    .on('click', function(events,d) {onClick(d.id)})                  
                 .transition().duration(1000)
                     .attr('cx', xPosition)    
                     .attr('r', d => radiusScale(d.type));
@@ -66,7 +71,8 @@
         fruitBowl(svg, { 
                         fruits,
                         height: +svg.attr('height'),
-                        onClick 
+                        onClick,
+                        selectedFruit 
                     });
     };
     render();
