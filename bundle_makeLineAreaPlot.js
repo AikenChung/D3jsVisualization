@@ -5,28 +5,19 @@
     
     // You can import API functions like this from D3.js.
     const svg = d3.select('svg');
-    
-    // d.mpg = +d.mpg;
-    // d.cylinders = +d.cylinders;
-    // d.displacement = +d.displacement;
-    // d.horsepower = +d.horsepower;
-    // d.weight = +d.weight;
-    // d.acceleration = +d.acceleration;
-    // d.year = +d.year;
-    // d.origin = d.origin;
-    // d.name = d.name;
+
     const render = data =>{
-        const graphTitle = 'Car Scatter Plot';
-        const xValue = d => d.mpg;
-        const yValue = d => d.horsepower;
+        const graphTitle = 'A Week in San Francisco';
+        const xValue = d => d.temperature;
+        const yValue = d => d.timestamp;
         const circleRadius = 5; // radius for circle object
         const width = +svg.attr('width');
         const height = +svg.attr('height');
         const margin = { top: 50, right: 40, bottom: 50, left: 90 };
         const innerHeight = height - margin.top - margin.bottom;
         const innerWidth = width - margin.left - margin.right;   
-        const xAxisTitle = 'Auto-Horsepower';
-        const yAxisTitle = 'Auto-MPG';
+        const xAxisTitle = 'Time';
+        const yAxisTitle = 'Temperature';
 
         const xScale = d3.scaleLinear()
             .domain(d3.extent(data, xValue))
@@ -35,7 +26,8 @@
         
         //const yScale = d3.scaleBand()
         //const yScale = d3.scalePoint()
-        const yScale = d3.scaleLinear()
+        //const yScale = d3.scaleLinear()
+        const yScale = d3.scaleTime()
             .domain(d3.extent(data, yValue))
             .range([0,innerWidth])
             .nice();
@@ -84,25 +76,16 @@
             .text(graphTitle);
     };
 
-    d3.csv('https://vizhub.com/curran/datasets/auto-mpg.csv')
+    d3.csv('https://vizhub.com/curran/datasets/temperature-in-san-francisco.csv')
         .then(data => {
             data.forEach( d => {
-                d.mpg = +d.mpg;
-                d.cylinders = +d.cylinders;
-                d.displacement = +d.displacement;
-                d.horsepower = +d.horsepower;
-                d.weight = +d.weight;
-                d.acceleration = +d.acceleration;
-                d.year = +d.year;
-                d.origin = d.origin;
-                d.name = d.name;});
+                d.temperature = +d.temperature;
+                d.timestamp = new Date(d.timestamp);
+            });
             
             console.log(data);
             render(data);
         });
-    
-    
-    
 
     //        
     //This line uses D3 to set the text  of the message div.
