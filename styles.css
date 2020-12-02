@@ -4,6 +4,18 @@ body{
     align-self: center;
 }
 
+.country{
+    fill: lightgreen;
+    stroke: black;
+    stroke-opacity: 0.1;
+}
+
+.sphere{
+    fill: darkblue;
+    stroke: black;
+    stroke-opacity: 0.1;
+}
+
 rect{
     fill:steelblue;
 }
