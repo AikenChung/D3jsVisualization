@@ -7,7 +7,10 @@ body{
 .country{
     fill: lightgreen;
     stroke: black;
-    stroke-opacity: 0.1;
+    stroke-width: 0.1px;
+}
+.country:hover{
+    fill: red;
 }
 
 .sphere{
