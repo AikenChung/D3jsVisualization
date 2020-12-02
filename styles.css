@@ -9,6 +9,11 @@ body{
     align-self: center;
 }
 
+path{
+    fill: none;
+    stroke: #57bdc3;
+}
+
 .country{
     fill: lightgreen;
     stroke: black;
@@ -38,8 +43,13 @@ rect{
 }
 
 text {
-    font-size: 2.5em;
-    font-family: sans-serif;
+    font-family: 'Playfair Display', serif;
+    text-shadow: 
+        -1px -1px 3px white,
+        -1px  1px 3px white,
+         1px -1px 3px white,
+         1px  1px 3px white;
+    pointer-events: none;
 }
 
 .tick text{
