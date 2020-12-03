@@ -9,60 +9,70 @@ body{
     align-self: center;
 }
 
-path{
+/*path{
     fill: none;
     stroke: #57bdc3;
-}
+}*/
 
+.country:hover{
+    fill: lightgrey;
+}
 .country{
-    fill: lightgreen;
     stroke: black;
     stroke-width: 0.1px;
 }
-.country:hover{
-    fill: red;
+
+.country.highlighted {
+    stroke: black;
+    stroke-width: 0.6px;
 }
+
 
 .sphere{
     fill: darkblue;
     stroke: black;
-    stroke-opacity: 0.1;
+    /*stroke-opacity: 0.1;*/
 }
 
-rect{
+/*rect{
     fill:steelblue;
-}
+}*/
 
 
-.line-path{
+/*.line-path{
     fill: maroon;
     opacity: 0.3;
     stroke: maroon;
     stroke-width: 5;
     stroke-linejoin: round;
-}
+}*/
 
 text {
     font-family: 'Playfair Display', serif;
-    text-shadow: 
+    /*text-shadow: 
         -1px -1px 3px white,
         -1px  1px 3px white,
          1px -1px 3px white,
-         1px  1px 3px white;
+         1px  1px 3px white;*/
     pointer-events: none;
 }
 
-.tick text{
-    font-size: 2em;
-    fill: #635F5D;
+.tick{
+    cursor: pointer;
 }
+
+/*.tick text{
+    font-size: 0.8em;
+    fill: #635F5D;
+
+}*/
 
 .tick line{
     stroke: #C0c0BB;
 }
 
-.xAxis-label{
+/*.xAxis-label{
     font-size: 3em;
     fill: #635F5D;
     font-family: sans-serif;
-}
+}*/
