@@ -1,7 +1,31 @@
 (function (topojson) {
     
 }(topojson));
+// This part can be isolated as an independant .js file
+const sizeLegend = (selection, props) =>{
+    const { sizeScale, 
+            spacing, 
+            textOffset,
+            tickFormat} = props;
+    const ticks = sizeScale.ticks(5).filter(d => d !==0);
+    const groups = selection.selectAll('g')
+        .data(ticks);
+    const groupsEnter = groups.enter().append('g');
+    groupsEnter.merge(groups)
+                .attr('transform', (d,i) => 
+                `translate(0, ${i*spacing})`);
+    groups.exit().remove();
 
+    groupsEnter.append('circle')             
+            .merge(groups.select('circle'))
+                .attr('r', sizeScale);
+
+    groupsEnter.append('text')
+    .merge(groups.select('text'))
+        .text(tickFormat)
+        .attr('dy', '0.32em')
+        .attr('x', textOffset)
+};
 // This function can be isolated as an independent .js file
 const loadAndProcessData = () =>
     Promise
@@ -26,7 +50,7 @@ const loadAndProcessData = () =>
             const featuresWithPopulation = countries.features
                 .filter(d => d.properties['2018'])
                 .map( d => {
-                    d.properties['2018'] = +d.properties['2018'].replace(/ /g, '');
+                    d.properties['2018'] = +d.properties['2018'].replace(/ /g, '')*1000;
                     return d;
                 });
             return {
@@ -86,7 +110,7 @@ const colorLegend = (selection, props) =>{
     //const projection = d3.geoOrthographic();
     const projection = d3.geoNaturalEarth1();
     const pathgenerator = d3.geoPath().projection(projection);
-    const radiusScale = d3.scaleSqrt();
+    
     const radiusValue = d => d.properties['2018'];
 
     const g = svg.append('g');
@@ -103,30 +127,50 @@ const colorLegend = (selection, props) =>{
 
     const colorScale = d3.scaleOrdinal();
     const colorValue = d => d.properties.economy;
-
+    const populationFormat = d3.format(',');
     loadAndProcessData().then( countries => {
         
-        radiusScale
+        const sizeScale = d3.scaleSqrt()
             .domain([0, d3.max(countries.features, radiusValue)])
-            .range([0, 20]);
+            .range([0, 20]);  
 
         g.selectAll('path').data(countries.features)
               .enter().append('path')
                 .attr('class','country')
                 .attr('d', pathgenerator)
-                .attr('fill', d => d.properties['2018'] ? 'green' : 'red')
+                .attr('fill', d => d.properties['2018'] ? '#d8d8d8' : 'gray')
               .append('title')
-                .text(d => d.id);
+                .text(d => 
+                    isNaN(radiusValue(d))
+                    ? 'Missing data'
+                    : [
+                    d.properties['Region, subregion, country or area *'],
+                    populationFormat(radiusValue(d))
+                    ].join(': '));
 
         countries.featuresWithPopulation.forEach(d => {
             d.properties.projected = projection(d3.geoCentroid(d));
         });
+        
         g.selectAll('circle').data(countries.featuresWithPopulation)
             .enter().append('circle')
             .attr('class','country-circle')
             .attr('cx', d => d.properties.projected[0])
             .attr('cy', d => d.properties.projected[1])
-            .attr('r', d => radiusScale(radiusValue(d)));
+            .attr('r', d => sizeScale(radiusValue(d)));
+            g.append('g') // for size legend
+            .attr('transform', `translate(30, 100)`)
+                .call(sizeLegend, { 
+                    sizeScale,
+                    spacing: 60,
+                    textOffset: 30,
+                    tickFormat: populationFormat
+                })
+            .append('text')
+              .attr('class','legeng-title')
+              .text('Population')
+              .attr('x', -20)
+              .attr('y',-40);
     });
     //https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json
     //'https://unpkg.com/world-atlas@1.1.4/world/110m.json'
