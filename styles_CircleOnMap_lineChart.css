@@ -1,0 +1,45 @@
+body{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    overflow: hidden;
+    align-self: center;
+}
+
+.title{
+    fill:#635f5d;
+    font-size: 2em;
+}
+
+
+.line-path{
+    fill: none;
+    opacity: 0.8;
+    stroke-width: 5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    mix-blend-mode: multiply;
+}
+
+text {
+    font-family: 'Playfair Display', serif;
+}
+
+.tick text{
+    font-size: 1.5em;
+    fill: #635F5D;
+
+}
+
+.tick line{
+    stroke: #C0c0BB;
+}
+
+.xAxis-label{
+    font-size: 3em;
+    fill: #635F5D;
+    font-family: sans-serif;
+}
