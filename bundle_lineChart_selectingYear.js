@@ -201,10 +201,11 @@ const lineChart = (selection, props) =>{
 
     var mousePerLine = g.merge(gEnter).selectAll('.mouse-per-line')
         .data(nested)
-      .enter()
+      .enter()      
         .append("g")
-        .attr("class", "mouse-per-line")
-      .append("circle")
+        .attr("class", "mouse-per-line");
+        
+    mousePerLine.append("circle")
         .attr("r", 7)            
         .style("stroke", function(d) {
             return colorScale(d.key);
@@ -214,7 +215,8 @@ const lineChart = (selection, props) =>{
         .style("opacity", "0");
 
     mousePerLine.append('text')
-       .attr("transform", "translate(10,3)");
+    .attr('class','circleText')
+    .attr("transform", `translate(10,3)`);
 
     gEnter.append('rect')
         .attr('class', 'mouse-interceptor')       
@@ -228,7 +230,7 @@ const lineChart = (selection, props) =>{
               .style("opacity", "0");
             d3.selectAll(".mouse-per-line circle")
               .style("opacity", "0");
-            d3.selectAll(".mouse-per-line text")
+            d3.selectAll(".circleText")
               .style("opacity", "0");
         })
         .on('mouseover', function() { // on mouse in show line, circles and text
@@ -236,7 +238,7 @@ const lineChart = (selection, props) =>{
                 .style("opacity", "1");
             d3.selectAll(".mouse-per-line circle")
                 .style("opacity", "1");
-            d3.selectAll(".mouse-per-line text")
+            d3.selectAll(".circleText")
                 .style("opacity", "1");
         })
         .on('mousemove', function(event, d){
@@ -245,23 +247,18 @@ const lineChart = (selection, props) =>{
             const hoverDate = xScale.invert(x);
             let hoveYearIndex = hoverDate.getFullYear() - 1950; 
             setSelectedYear(hoverDate.getFullYear());
-            /*d3.select(this).select('text')
-                .attr('x', x)
-                .attr('y', y)
-              .text('testText');*/
-              d3.selectAll(".mouse-per-line")
+
+            d3.selectAll(".mouse-per-line")
               .attr("transform", function(d, i) {
                 
-                //console.log(d.values[hoveYearIndex].population);
-                //console.log(d);
-                d3.select(this).select('text')
-                  .text(function(d){
-                      return(d.values[hoveYearIndex].population);
-                  });    
-                  //.text(d.values[hoveYearIndex].population);
-                  //.text(y.toFixed(2));
-                return "translate(" + x + "," + yScale(d.values[hoveYearIndex].population) +")";
-              });
+                    d3.selectAll('.circleText')                 
+                        .text(function(d){
+                                //console.log(this);  
+                                return (d.values[hoveYearIndex].population);
+                            });
+
+                    return "translate(" + x + "," + yScale(d.values[hoveYearIndex].population) +")";
+                });
         });
 
 }
