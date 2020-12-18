@@ -97,8 +97,8 @@ const lineChart = (selection, props) =>{
     //const xScale = d3.scaleLinear()
     const xScale = d3.scaleTime()
         .domain(d3.extent(data, xValue))
-        .range([0, innerWidth])
-        .nice();
+        .range([0, innerWidth]);
+        //.nice();
     
     //const yScale = d3.scaleBand()
     //const yScale = d3.scalePoint()
@@ -183,7 +183,7 @@ const lineChart = (selection, props) =>{
     //selectedYear
     const selectedYearDate = parseYear(selectedYear);
 
-    gEnter.append('line')
+    const mouseHoverLine = gEnter.append('line')
         .attr('class', 'slected-year-line')
         .attr('y1', 0)
       .merge(g.select('.slected-year-line'))
@@ -198,7 +198,24 @@ const lineChart = (selection, props) =>{
         .attr('text-anchor', 'middle')
     .merge(g.select('.title'))
         .text(graphTitle);
-        
+
+    var mousePerLine = g.merge(gEnter).selectAll('.mouse-per-line')
+        .data(nested)
+      .enter()
+        .append("g")
+        .attr("class", "mouse-per-line")
+      .append("circle")
+        .attr("r", 7)            
+        .style("stroke", function(d) {
+            return colorScale(d.key);
+        })
+        .style("fill", "none")
+        .style("stroke-width", "3px")
+        .style("opacity", "0");
+
+    mousePerLine.append('text')
+       .attr("transform", "translate(10,3)");
+
     gEnter.append('rect')
         .attr('class', 'mouse-interceptor')       
         .attr('fill', 'none')
@@ -206,15 +223,45 @@ const lineChart = (selection, props) =>{
       .merge(g.select('.mouse-interceptor'))
         .attr('width', innerWidth)
         .attr('height', innerHeight-10 )
+        .on('mouseout', function() { // on mouse out hide line, circles and text
+            d3.select(".slected-year-line")
+              .style("opacity", "0");
+            d3.selectAll(".mouse-per-line circle")
+              .style("opacity", "0");
+            d3.selectAll(".mouse-per-line text")
+              .style("opacity", "0");
+        })
+        .on('mouseover', function() { // on mouse in show line, circles and text
+            d3.select(".slected-year-line")
+                .style("opacity", "1");
+            d3.selectAll(".mouse-per-line circle")
+                .style("opacity", "1");
+            d3.selectAll(".mouse-per-line text")
+                .style("opacity", "1");
+        })
         .on('mousemove', function(event, d){
             const x = d3.pointer(event, this)[0];
             const y = d3.pointer(event, this)[1];
             const hoverDate = xScale.invert(x);
+            let hoveYearIndex = hoverDate.getFullYear() - 1950; 
             setSelectedYear(hoverDate.getFullYear());
             /*d3.select(this).select('text')
                 .attr('x', x)
                 .attr('y', y)
               .text('testText');*/
+              d3.selectAll(".mouse-per-line")
+              .attr("transform", function(d, i) {
+                
+                //console.log(d.values[hoveYearIndex].population);
+                //console.log(d);
+                d3.select(this).select('text')
+                  .text(function(d){
+                      return(d.values[hoveYearIndex].population);
+                  });    
+                  //.text(d.values[hoveYearIndex].population);
+                  //.text(y.toFixed(2));
+                return "translate(" + x + "," + yScale(d.values[hoveYearIndex].population) +")";
+              });
         });
 
 }
@@ -227,7 +274,7 @@ const lineChart = (selection, props) =>{
     const svg = d3.select('svg');
     const lineChartG = svg.append('g'); // for invoking the line chart
     const colorLegendG = svg.append('g');
-    
+     
     // state
     let data;
     let selectedYear = 2020;
@@ -258,7 +305,7 @@ const lineChart = (selection, props) =>{
         .sort((a,b) =>
         d3.descending(lastYValue(a), lastYValue(b))
         );
-            
+           
         colorScale.domain(nested.map(d => d.key)); 
 
         lineChartG.call(lineChart, {
