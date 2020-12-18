@@ -190,7 +190,7 @@ const lineChart = (selection, props) =>{
         .attr('x1', xScale(selectedYearDate))
         .attr('x2', xScale(selectedYearDate))       
         .attr('y2', innerHeight-10);
-
+    
     gEnter.append('text')
         .attr('y', -10)
         .attr('x', 400)
@@ -198,6 +198,12 @@ const lineChart = (selection, props) =>{
         .attr('text-anchor', 'middle')
     .merge(g.select('.title'))
         .text(graphTitle);
+        
+    gEnter.append('text')
+        .attr('class', 'slected-year-line-text')
+      .merge(g.select('.slected-year-line-text'))
+        .attr('x',xScale(selectedYearDate)-20)
+        .attr('y',innerHeight+25);
 
     var mousePerLine = g.merge(gEnter).selectAll('.mouse-per-line')
         .data(nested)
@@ -228,6 +234,8 @@ const lineChart = (selection, props) =>{
         .on('mouseout', function() { // on mouse out hide line, circles and text
             d3.select(".slected-year-line")
               .style("opacity", "0");
+            d3.select(".slected-year-line-text")
+              .style("opacity", "0");
             d3.selectAll(".mouse-per-line circle")
               .style("opacity", "0");
             d3.selectAll(".circleText")
@@ -235,6 +243,8 @@ const lineChart = (selection, props) =>{
         })
         .on('mouseover', function() { // on mouse in show line, circles and text
             d3.select(".slected-year-line")
+                .style("opacity", "1");
+            d3.select(".slected-year-line-text")
                 .style("opacity", "1");
             d3.selectAll(".mouse-per-line circle")
                 .style("opacity", "1");
@@ -247,7 +257,11 @@ const lineChart = (selection, props) =>{
             const hoverDate = xScale.invert(x);
             let hoveYearIndex = hoverDate.getFullYear() - 1950; 
             setSelectedYear(hoverDate.getFullYear());
-
+            d3.selectAll('.slected-year-line-text')
+                .text(function(d){
+                    //console.log(hoverDate.getFullYear());
+                    return hoverDate.getFullYear();
+                    });
             d3.selectAll(".mouse-per-line")
               .attr("transform", function(d, i) {
                 
