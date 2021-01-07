@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import ChoroplethMap from './components/ChoroplethMap/ChoroplethMap';
+import {loadAndProcessMapData} from './components/ChoroplethMap/loadAndProcessMapData';
 
-function App() {
+function App () {
+
+  const [countryData, setCountryData] = useState(null);
+
+  useEffect( async () => {
+    const mapData = await loadAndProcessMapData();
+    setCountryData(mapData);
+  },[]);
+            
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <div className="App">
+      {
+        countryData ? <ChoroplethMap width={960} height={500} data={countryData}/> 
+        : 'Loading...'
+      } 
+      </div>
+    </React.Fragment>
   );
+
 }
 
 export default App;

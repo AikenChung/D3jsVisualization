@@ -36,3 +36,43 @@
     transform: rotate(360deg);
   }
 }
+
+
+body{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  overflow: hidden;
+  align-self: center;
+}
+
+svg{
+  background: honeydew;
+}
+/*path{
+  fill: none;
+  stroke: #57bdc3;
+}*/
+
+.country:hover{
+  fill: lightgrey;
+}
+.country{
+  stroke: black;
+  stroke-width: 0.1px;
+}
+
+.country.highlighted {
+  stroke: black;
+  stroke-width: 0.6px;
+}
+
+
+.sphere{
+  fill: darkblue;
+  stroke: black;
+  /*stroke-opacity: 0.1;*/
+}
