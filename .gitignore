@@ -5,6 +5,9 @@
 # production
 /build
 
+.eslintcache
+
 data.csv
 auto-mpg.csv
+auto-mpg.xlsx
 worldCountryHierarchy.json
