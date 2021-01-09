@@ -9,7 +9,7 @@ function ChoroplethMap (props) {
 
     useEffect(() =>{
         drawMap();
-    },[data]);
+    });
     
     const drawMap = () => { 
         
