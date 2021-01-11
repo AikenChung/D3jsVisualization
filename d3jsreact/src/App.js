@@ -6,6 +6,8 @@ import LineChart from './components/InteractiveLineChart/LineChart';
 import {loadLineChartData} from './components/InteractiveLineChart/loadLineChartData';
 import ScatterPlotWithMenu from './components/ScatterPlotWithMenu/ScatterPlotWithMenu';
 import {loadScatterPlotData} from './components/ScatterPlotWithMenu/loadScatterPlotData';
+import VerBarChart from './components/VerticleBarChart/vBarChart';
+import {loadVerticleBarChartData} from './components/VerticleBarChart/loadVerticleBarChartData';
 
 
 function App () {
@@ -13,6 +15,7 @@ function App () {
   const [countryData, setCountryData] = useState(null);
   const [dLineChartData, setdLineChartData] = useState(null);
   const [scatterPlotData, setScatterPlotData] = useState(null);
+  const [verBarChartData, setVerBarChartData] = useState(null);
 
   useEffect( async () => {
     const mapData = await loadAndProcessMapData();
@@ -21,6 +24,8 @@ function App () {
     setdLineChartData(dynamicLineChartData);
     const scatterPlotWihMenuData = await loadScatterPlotData();
     setScatterPlotData(scatterPlotWihMenuData);
+    const verticleBarChartData = loadVerticleBarChartData();
+    setVerBarChartData(verticleBarChartData);
   },[]);
 
   return (
@@ -29,6 +34,11 @@ function App () {
         <div className="App">
         {
           scatterPlotData ? <ScatterPlotWithMenu width={960} height={500} data={scatterPlotData}/> 
+          : 'Loading...'
+        }
+        <br />
+        {
+          verBarChartData ? <VerBarChart width={960} height={500} data={verBarChartData}/> 
           : 'Loading...'
         }
         <br />      
