@@ -53,7 +53,7 @@ export const scatterPlot = (selection, props) => {
             .call(xAxis)
             .selectAll('.domain').remove();
 
-        const xAxisLAbelText = xAxisGEnter.append('text')
+        xAxisGEnter.append('text')
             .attr('class', 'xAxis-label')
             .attr('y', 55)
             .attr('fill', 'black')
@@ -71,7 +71,7 @@ export const scatterPlot = (selection, props) => {
             .selectAll('.domain').remove();
 
             
-        const yAxisLAbelText = yAxisGEnter.append('text')
+        yAxisGEnter.append('text')
             .attr('class', 'xAxis-label')
             .attr('y', -60)          
             .attr('fill', 'black')
@@ -92,8 +92,7 @@ export const scatterPlot = (selection, props) => {
             .attr('cx', d => xScale(xValue(d)))
             .attr('cy', d => yScale(yValue(d)))
             .attr('r', circleRadius);
-
-        
+       
         /*g.append('text')
             .attr('class', 'title')
             .attr('y', -10)

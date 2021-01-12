@@ -1,7 +1,9 @@
 import React, { useRef, useEffect} from 'react';
 import * as d3 from 'd3';
-import {scatterPlot} from './scatterPlot';
+import './ScatterPlotWithMenu.css'
+import {scatterPlot} from './ScatterPlot';
 import {dropdownMenu} from './dropdownMenu';
+
 
 function ScatterPlotWithMenu (props) {    
 
@@ -9,25 +11,24 @@ function ScatterPlotWithMenu (props) {
     let svgRef_scatterPlot = useRef();
 
     useEffect(() =>{        
-        drawMap();
+        drawScatterSvg();
     });   
 
-    const drawMap = () => { 
-    
-        let xColumn = data.columns[4];
-        let yColumn = data.columns[0];
-        const onXColumnClicked = column => {
-            xColumn = column;
-            render();
-        };
-        const onYColumnClicked = column => {
-            yColumn = column;
-            render();
-        };
+    let xColumn = data.columns[4];
+    let yColumn = data.columns[0];
 
-        const render = () =>{
-            
-            const svg = d3.select(svgRef_scatterPlot.current);
+    const onXColumnClicked = column => {
+        xColumn = column;
+        drawScatterSvg();
+    };
+    const onYColumnClicked = column => {
+        yColumn = column;
+        drawScatterSvg();
+    };
+
+    const svg = d3.select(svgRef_scatterPlot.current);
+
+    const drawScatterSvg = () => { 
 
             d3.select('#x-menu')
                 .call( dropdownMenu, {
@@ -51,13 +52,11 @@ function ScatterPlotWithMenu (props) {
                 yValue : d => d[yColumn],
                 yAxisTitle : 'Auto-'+yColumn,
                 circleRadius : 5,// radius for circle object
-                width : +svg.attr('width'),
-                height :+svg.attr('height'),
+                width : +width,
+                height :+height,
                 margin : { top: 40, right: 40, bottom: 50, left: 90 },
                 data
             });
-        };     
-        render();
     };
 
     return (

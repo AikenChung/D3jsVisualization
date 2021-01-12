@@ -15,9 +15,7 @@ export const loadScatterPlotData = async () => {
                     d.horsepower = +d.horsepower;
                     d.weight = +d.weight;
                     d.acceleration = +d.acceleration;
-                    d.year = +d.year;
-                    d.origin = d.origin;
-                    d.name = d.name;});
+                    d.year = +d.year;});
 
                 return fetchedData;
             });

@@ -49,7 +49,7 @@ function VerBarChart (props) {
                 .attr('class', 'xAxis-label')
                 .attr('y', 55)
                 .attr('x', innerWidth/2)
-                .attr('fill', 'black')
+                .attr('fill', 'Black')
                 .text('Population Per Country');
 
             //console.log(xScale.domain());
@@ -58,7 +58,8 @@ function VerBarChart (props) {
             .attr('x', d => yScale(yValue(d)))
             .attr('y', d => xScale(xValue(d)))
             .attr('height', d => innerHeight - xScale(xValue(d))-10)
-            .attr('width', yScale.bandwidth());
+            .attr('width', yScale.bandwidth())
+            .attr('fill', 'Grey');
 
             g.append('text')
                 .attr('y', -10)

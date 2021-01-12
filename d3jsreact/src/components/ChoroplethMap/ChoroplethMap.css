@@ -1,0 +1,20 @@
+
+.country:hover{
+fill: lightgrey;
+}
+.country{
+stroke: black;
+stroke-width: 0.1px;
+}
+
+.country.highlighted {
+stroke: black;
+stroke-width: 0.6px;
+}
+
+
+.sphere{
+fill: darkblue;
+stroke: black;
+/*stroke-opacity: 0.1;*/
+}
