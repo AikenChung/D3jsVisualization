@@ -8,7 +8,7 @@ import ScatterPlotWithMenu from './components/ScatterPlotWithMenu/ScatterPlotWit
 import {loadScatterPlotData} from './components/ScatterPlotWithMenu/loadScatterPlotData';
 import VerBarChart from './components/VerticleBarChart/VBarChart';
 import {loadVerticleBarChartData} from './components/VerticleBarChart/loadVerticleBarChartData';
-
+import MouseFollower from './components/MouseFollower/MouseFollower';
 
 function App () {
 
@@ -34,7 +34,8 @@ function App () {
   return (
     <>
       <React.Fragment>
-        <div className="App">         
+        <div className="App">
+          <MouseFollower />         
         {
           dLineChartData ? <InteractiveLineChart width={960} height={500} data={dLineChartData}/> 
           : 'Loading...'

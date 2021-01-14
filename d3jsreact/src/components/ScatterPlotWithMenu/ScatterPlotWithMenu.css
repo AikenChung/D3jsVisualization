@@ -9,7 +9,7 @@ body{
     align-self: center;
 }
 
-circle {
+.scatter-circle {
     fill: red;
     opacity: 0.3;
 }

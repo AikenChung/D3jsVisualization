@@ -1,10 +1,18 @@
 
-export const colorLegend = (selection, props) =>{
+export const ColorLegend = (selection, props) =>{
     const { colorScale, 
-            radiusScale, 
-            spacing, 
-            textOffset,
-            xPosition} = props;
+        radiusScale, 
+        spacing, 
+        textOffset,
+        xPosition} = props;
+
+// export const ColorLegend = (
+//                             selection,
+//                             colorScale,
+//                             radiusScale,
+//                             spacing,
+//                             textOffset,
+//                             xPosition ) =>{   
 
     const groups = selection.selectAll('g')
         .data(colorScale.domain());
@@ -29,4 +37,6 @@ export const colorLegend = (selection, props) =>{
         .text(d => d)
         .attr('dy', '0.32em')
         .attr('x', textOffset)
+    
+    return (groupsEnter);
 };

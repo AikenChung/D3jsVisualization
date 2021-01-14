@@ -83,6 +83,7 @@ export const scatterPlot = (selection, props) => {
 
         const circles = g.merge(gEnter).selectAll('circle').data(data);
         circles.enter().append('circle')
+            .attr('class', 'scatter-circle')
             .attr('cx', innerWidth/2)
             .attr('cy', innerHeight/2)
             .attr('r',0)
