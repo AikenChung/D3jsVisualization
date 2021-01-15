@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useCallback} from 'react';
 
 const width = 960;
 const height = 500;
@@ -14,10 +14,10 @@ function MouseFollower () {
 
     const [mousePosition, setMousePosition] = useState(initialMousePosition);
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = useCallback((event) => {
     const { clientX, clientY } = event;
     setMousePosition({ x: clientX-15, y: clientY-50 });
-  };
+  }, [setMousePosition]);
 
   return (
     <div className="chart-section">
