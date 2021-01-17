@@ -9,6 +9,7 @@ import {loadScatterPlotData} from './components/ScatterPlotWithMenu/loadScatterP
 import VerBarChart from './components/VerticleBarChart/VBarChart';
 import {loadVerticleBarChartData} from './components/VerticleBarChart/loadVerticleBarChartData';
 import MouseFollower from './components/MouseFollower/MouseFollower';
+import HBarChart from './components/HorizontalBarChart/HBarChart';
 
 function App () {
 
@@ -50,6 +51,8 @@ function App () {
           verBarChartData ? <VerBarChart width={960} height={500} data={verBarChartData}/> 
           : 'Loading...'
         }
+        <br />
+        <HBarChart width={960} height={500} />       
         <br />   
         {
           countryData ? <ChoroplethMap width={960} height={500} data={countryData}/> 

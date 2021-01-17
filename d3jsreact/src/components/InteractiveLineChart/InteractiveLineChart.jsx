@@ -10,8 +10,6 @@ function InteractiveLineChart (props) {
 
     const {width, height, data} = props;
     let svgRef_lineChar = useRef();
-    let svgRef_colorLegend = useRef();
-    let colorLegendRef = d3.select(svgRef_colorLegend.current);
     
     
     const drawLineChart = () => { 
@@ -20,14 +18,13 @@ function InteractiveLineChart (props) {
         const svg = d3.select(svgRef_lineChar.current);
         const lineChartG = svg.append('g'); // for invoking the line chart
         const colorLegendG = svg.append('g');
-        
-        colorLegendRef = svg.append('g');
+
         const graphTitle = 'World Population Over Time';
         const xValue = d => d.year;
         const yValue = d => d.population;
         const colorValue = d => d.name;
         const margin = { top: 50, right: 230, bottom: 50, left: 90 };
-        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+        const colorScale = d3.scaleOrdinal(d3.schemeCategory10); 
         const xAxisTitle = 'Year';
         const yAxisTitle = 'Population';
         
@@ -40,9 +37,9 @@ function InteractiveLineChart (props) {
             .sort((a,b) =>
             d3.descending(lastYValue(a), lastYValue(b))
         );
-            
-        colorScale.domain(nested.map(d => d.key)); 
-        
+           
+        colorScale.domain(nested.map(d => d.key));
+
         // state
         let selectedYear = 2020;
         const setSelectedYear = year => {
@@ -88,16 +85,14 @@ function InteractiveLineChart (props) {
     return (
         <div className="InteractiveLinChart">
             <svg ref={svgRef_lineChar} width={width} height={height}>
-                {
-                // <ColorLegend
-                //     selection={svgRef_lineChar} 
-                //     colorScale
-                //     radiusScale={15}
-                //     spacing={50}
-                //     textOffset={680}
-                //     xPosition={650}
-                // />
-                }
+                {/* <ColorLegend
+                    selection={svgRef_lineChar} 
+                    colorScale={colorScale}
+                    radiusScale={15}
+                    spacing={50}
+                    textOffset={680}
+                    xPosition={650}
+                /> */}
             </svg>
         </div>
     );
