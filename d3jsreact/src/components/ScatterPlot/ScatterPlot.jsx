@@ -16,14 +16,17 @@ function ScatterPlot (props) {
     const xValue = d => d.weight;
     const yValue = d => d.mpg;
     const xAxisTitle = 'Interactive Scatter Plot'
+    const yAxisTitle = 'Interactive Scatter Plot'
 
     const xScale = d3.scaleLinear()
         .domain(d3.extent(data, xValue))
-        .range([0, innerWidth]);
+        .range([0, innerWidth])
+        .nice();
     
     const yScale = d3.scaleLinear()
         .domain(d3.extent(data, yValue))
-        .range([0,(innerHeight-10)]);
+        .range([(innerHeight-10), 0])
+        .nice();
 
     if(!data){
         return (<pre>Loading...</pre>);
@@ -39,6 +42,10 @@ function ScatterPlot (props) {
                           x={innerWidth / 2}
                           y={innerHeight + 40}
                           textAnchor="middle">{xAxisTitle}</text>
+                    <text className="yaxis-label"
+                          textAnchor="middle"
+                          transform={`translate(-60, ${innerHeight / 2}) rotate(-90)`}>
+                        {yAxisTitle}</text>
                     <MakeScatterPoints ScatterPointData={data}
                               xScale={xScale}
                               yScale={yScale}

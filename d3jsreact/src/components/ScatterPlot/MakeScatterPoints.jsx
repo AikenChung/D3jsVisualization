@@ -4,8 +4,9 @@ export const MakeScatterPoints = ({ ScatterPointData,
                             yScale,
                             xValue,
                             yValue }) => ScatterPointData.map(
-    d => 
+    (d, i) => 
         <circle
+        key={i}
         className={"datapoint"}
         cx={xScale(xValue(d))} 
         cy={yScale(yValue(d))} 
