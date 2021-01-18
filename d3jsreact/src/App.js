@@ -10,13 +10,16 @@ import VerBarChart from './components/VerticleBarChart/VBarChart';
 import {loadVerticleBarChartData} from './components/VerticleBarChart/loadVerticleBarChartData';
 import MouseFollower from './components/MouseFollower/MouseFollower';
 import HBarChart from './components/HorizontalBarChart/HBarChart';
+import {loadScatterData} from './components/ScatterPlot/loadScatterData';
+import ScatterPlot from './components/ScatterPlot/ScatterPlot';
 
 function App () {
 
   const [countryData, setCountryData] = useState(null);
   const [dLineChartData, setdLineChartData] = useState(null);
-  const [scatterPlotData, setScatterPlotData] = useState(null);
+  const [scatterPlotWithMenuData, setScatterPlotWithMenuData] = useState(null);
   const [verBarChartData, setVerBarChartData] = useState(null);
+  const [scatterPlotData, setScatterPlotData] = useState(null);
 
   useEffect( () => {
     async function fetchedData(){
@@ -24,26 +27,33 @@ function App () {
       setCountryData(mapData);
       const dynamicLineChartData = await loadLineChartData();
       setdLineChartData(dynamicLineChartData);
-      const scatterPlotWihMenuData = await loadScatterPlotData();
-      setScatterPlotData(scatterPlotWihMenuData);
+      const scatterPlotMenuData = await loadScatterPlotData();
+      setScatterPlotWithMenuData(scatterPlotMenuData);
       const verticleBarChartData = loadVerticleBarChartData();
       setVerBarChartData(verticleBarChartData);
+      const scatterPlotData = await loadScatterData();
+      setScatterPlotWithMenuData(scatterPlotData);
     }
     fetchedData();
   },[]);
-
+//<ScatterPlot width={960} height={500}/>
   return (
     <>
       <React.Fragment>
         <div className="App">
-          <MouseFollower />         
+        {
+          scatterPlotData ? <ScatterPlot width={960} height={500} data={scatterPlotData}/> 
+          : 'Loading...'
+        }
+        <br />  
+          <MouseFollower width={960} height={500}/>         
         {
           dLineChartData ? <InteractiveLineChart width={960} height={500} data={dLineChartData}/> 
           : 'Loading...'
         }
         <br />
         {
-          scatterPlotData ? <ScatterPlotWithMenu width={960} height={500} data={scatterPlotData}/> 
+          scatterPlotWithMenuData ? <ScatterPlotWithMenu width={960} height={500} data={scatterPlotWithMenuData}/> 
           : 'Loading...'
         }
         <br />
