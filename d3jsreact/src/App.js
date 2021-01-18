@@ -32,7 +32,7 @@ function App () {
       const verticleBarChartData = loadVerticleBarChartData();
       setVerBarChartData(verticleBarChartData);
       const scatterPlotData = await loadScatterData();
-      setScatterPlotWithMenuData(scatterPlotData);
+      setScatterPlotData(scatterPlotData);
     }
     fetchedData();
   },[]);

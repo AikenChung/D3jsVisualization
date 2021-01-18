@@ -23,8 +23,7 @@ function ScatterPlot (props) {
     
     const yScale = d3.scaleLinear()
         .domain(d3.extent(data, yValue))
-        .range([0,(innerHeight-10)])
-        .padding(0.1);
+        .range([0,(innerHeight-10)]);
 
     if(!data){
         return (<pre>Loading...</pre>);
